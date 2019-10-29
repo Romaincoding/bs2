@@ -33,43 +33,54 @@ public class Main {
 
 
     }
-
-    static void generateShip(int size, char tab [][]){
-        int randomPointRow = (int) (Math.random()*10 - size +1);
-        int randomPointCol = (int) (Math.random()*10 - size +1);
-        int isHorizontal = (int) (Math.random() * 2);
-
-       for (int s=1;s<size;s++){
-           if(isHorizontal == 1) {
-               tab[randomPointCol + s][randomPointRow] = 'S';
-           }
-           else {
-               tab[randomPointCol][randomPointRow + s] = 'S';
-
-           }
-
-        }
-        tab [randomPointCol] [randomPointRow]= 'S';
-        if (size == 2){
-            if (randomPointCol != 0) {
-                tab[randomPointCol][randomPointRow] = 'S';
-                tab[randomPointCol - 1][randomPointRow] = 'S';
-            }else{
-                tab[randomPointCol][randomPointRow] = 'S';
-                tab[randomPointCol + 1][randomPointRow] = 'S';
-
+    static void storeShip(int size,boolean isHorizontal, int randomPointCol, int randomPointRow, char tab [][]){
+        for (int s = 0; s < size; s++) {
+            if (isHorizontal) {
+                tab[randomPointCol + s][randomPointRow] = 'S';
+            } else {
+                tab[randomPointCol][randomPointRow + s] = 'S';
             }
         }
 
     }
-    static boolean isFree (int size, int col, int row, char tab [][]){
+
+    static void generateShip(int size, char tab [][]) {
+
+        boolean shipCreated = false;
+
+        while (shipCreated==false) {
+
+            boolean isHorizontal = (int) (Math.random() * 2) == 1 ? true : false;
+
+            int randomPointRow = (int) (Math.random() * (10));
+            int randomPointCol = (int) (Math.random() * (10 - size + 1));
+
+            if (isHorizontal == false) {
+                randomPointCol = (int) (Math.random() * (10));
+                randomPointRow = (int) (Math.random() * (10 - size + 1));
+            }
+
+            if (isFree(size, randomPointCol, randomPointRow, tab, isHorizontal)) {
+                storeShip(size, isHorizontal, randomPointCol, randomPointRow, tab);
+                shipCreated =true;
+            }
+        }
+    }
+
+    
+    static boolean isFree (int size, int col, int row, char tab [][], boolean isHorizontal){
         // size = 2
         // col = 1
         // row = 4
         for(int i=0;i<size;i++) {
-            if (tab[row][col - i] == 'S') {
+            if (isHorizontal == false && (tab[col][row + i] == 'S')) {
                 return false;
             }
+
+            if (isHorizontal == true && (tab [col+i][row] =='S')){
+                return false;
+            }
+
         }
         return true;
     }
@@ -92,7 +103,6 @@ public class Main {
         displayTable(tableau);
 
         // generate ships in the table
-
 
         /* for(int z=0;z<10000;z++){
              int indRow = (int)(Math.random()*10);
