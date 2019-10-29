@@ -3,20 +3,23 @@ package com.company;
 
 public class Main {
 
-
+// creation of a table with five ships
     static void initTable(char tab[][]){
 
         for (int row = 0;row<10;row++){
             for(int col= 0;col<10;col++){
                 tab [col] [row] = '~';
-
             }
-
         }
 
+        generateShip(2,tab);
+        generateShip(5,tab);
+        generateShip(3,tab);
+        generateShip(3,tab);
+        generateShip(4,tab);
     }
 
-    //
+    //display table with ships
     static void displayTable(char tab[][]) {
 
         System.out.println("   A B C D E F G H I J");
@@ -33,6 +36,7 @@ public class Main {
 
 
     }
+    //set ship
     static void storeShip(int size,boolean isHorizontal, int randomPointCol, int randomPointRow, char tab [][]){
         for (int s = 0; s < size; s++) {
             if (isHorizontal) {
@@ -43,7 +47,11 @@ public class Main {
         }
 
     }
-
+/* choose a random position in the table and
+check if it's empty (no ship),
+choose if the ship is horizontal and vertical
+fill the table with ships until five ships are in the table
+ */
     static void generateShip(int size, char tab [][]) {
 
         boolean shipCreated = false;
@@ -67,7 +75,7 @@ public class Main {
         }
     }
 
-    
+// boolean's function which check if there is a ship on a position and control if there is enough space to place the entire ship
     static boolean isFree (int size, int col, int row, char tab [][], boolean isHorizontal){
         // size = 2
         // col = 1
@@ -88,27 +96,12 @@ public class Main {
     public static void main(String[] args) {
 
         char tableau[][] = new char[10][10];
-
+// Warm welcome to new player
         System.out.println("AHOY MATEY"); // write your code here
         initTable(tableau);
-        generateShip(2,tableau);
-
-        generateShip(5,tableau);
-
-        generateShip(3,tableau);
-
-        //generateShip(3,tableau);
-        generateShip(4,tableau);
 
         displayTable(tableau);
 
-        // generate ships in the table
-
-        /* for(int z=0;z<10000;z++){
-             int indRow = (int)(Math.random()*10);
-             System.out.println(indRow);
-
-
-         }*/
+       
     }
 }
