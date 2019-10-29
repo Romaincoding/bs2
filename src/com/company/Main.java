@@ -19,14 +19,14 @@ public class Main {
     //
     static void displayTable(char tab[][]) {
 
-        System.out.println("  A B C D E F G H I J");
+        System.out.println("   A B C D E F G H I J");
         for (int row = 0;row<10;row++){
             String affichage ="";
             for(int col= 0;col<10;col++){
 
                 affichage = affichage + tab [col][row] + ' ';
             }
-            System.out.println(row + " "+ affichage);
+            System.out.println(row + "  "+ affichage);
         }
 
 
@@ -78,13 +78,11 @@ public class Main {
         displayTable(tableau);
 
 
-
         /* for(int z=0;z<10000;z++){
              int indRow = (int)(Math.random()*10);
              System.out.println(indRow);
 
 
          }*/
-
     }
 }
