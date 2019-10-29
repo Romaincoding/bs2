@@ -35,9 +35,20 @@ public class Main {
     }
 
     static void generateShip(int size, char tab [][]){
-        int randomPointRow = (int) (Math.random()*10);
-        int randomPointCol = (int) (Math.random()*10);
+        int randomPointRow = (int) (Math.random()*10 - size +1);
+        int randomPointCol = (int) (Math.random()*10 - size +1);
+        int isHorizontal = (int) (Math.random() * 2);
 
+       for (int s=1;s<size;s++){
+           if(isHorizontal == 1) {
+               tab[randomPointCol + s][randomPointRow] = 'S';
+           }
+           else {
+               tab[randomPointCol][randomPointRow + s] = 'S';
+
+           }
+
+        }
         tab [randomPointCol] [randomPointRow]= 'S';
         if (size == 2){
             if (randomPointCol != 0) {
@@ -69,13 +80,18 @@ public class Main {
 
         System.out.println("AHOY MATEY"); // write your code here
         initTable(tableau);
+        generateShip(2,tableau);
+
+        generateShip(5,tableau);
+
+        generateShip(3,tableau);
+
+        //generateShip(3,tableau);
+        generateShip(4,tableau);
+
         displayTable(tableau);
 
         // generate ships in the table
-        generateShip(2,tableau);
-        generateShip(1,tableau);
-
-        displayTable(tableau);
 
 
         /* for(int z=0;z<10000;z++){
