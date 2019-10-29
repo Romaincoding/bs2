@@ -1,4 +1,5 @@
 package com.company;
+import java.util.Scanner;
 //import Math.*;
 
 public class Main {
@@ -101,7 +102,51 @@ fill the table with ships until five ships are in the table
         initTable(tableau);
 
         displayTable(tableau);
+// function which convert entry
+       int A = 0;
+       int B = 1;
+       int C = 2;
+       int D = 3;
+       int E = 4;
+       int F = 5;
+       int G = 6;
+       int H = 7;
+       int I = 8;
+       int J = 9;
+       String [] letters = {"A", "B", "C", "D", "E", "F","G", "H", "I", "J"};
+       System.out.println(letters [1] );
 
-       
+        String c5="C5";
+        String  uneLettre = "C";
+
+        if ( 1 == 1 ) // trouver comment tester C5 = 2lettres
+        {
+            int index = 0;
+            int i= 0;
+            for (String lettre : letters) {
+                if (uneLettre.equals(lettre))
+                {
+                    index =  i;
+                    System.out.println("cc");
+                }
+                i++;
+
+            }
+            System.out.println(index);
+        }
+        char[] splitString=c5.toCharArray();
+        for(char c:splitString){
+            System.out.println(c);
+        }
+
+
+// ask for an entry
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Please enter a position :");
+        String str = sc.nextLine();
+        System.out.println("You choose position: " + str);
+
+
+
     }
 }
