@@ -136,10 +136,13 @@ public class Main {
         return result;
     }
     //fonction play
-    static void shoot(int colIdx, int rowIdx, char tab[][]) {
+    static boolean shoot(int colIdx, int rowIdx, char tab[][]) {
+        boolean isShootOK = false;
+
         if (isShip(colIdx, rowIdx, tab)==true){
             System.out.println("BOOM!");
             tab[colIdx][rowIdx] = 'X';
+            isShootOK = true;
 
         }else if(isAlreadyHit(colIdx, rowIdx, tab)==true){
             System.out.println("AlREADY HIT");
@@ -149,6 +152,7 @@ public class Main {
             tab[colIdx][rowIdx] = 'O';
         }
 
+        return isShootOK;
     }
     static boolean isShip ( int col, int row, char tab [][]){
         if(tab[col][row]== '#'){
@@ -157,61 +161,66 @@ public class Main {
         return false;
     }
     static boolean isAlreadyHit ( int col, int row, char tab [][]) {
-        if (tab[col][row] == 'X') {
+        if ( (tab[col][row] == 'X') || (tab[col][row] == 'O') ) {
             return true;
         }
         return false;
     }
+    static boolean playerTurn(char tab[][]){
+        boolean playAgain = true;
+        Scanner sc = new Scanner(System.in);
+        // Get input from user
+        System.out.println("Entrez des coordonnées : ");
+        String input = sc.next();
+        // Convert input
+        int[] position = convertPositionToIndex(input);
+        //System.out.println("colonne = " + position[0]);
+        //System.out.println("ligne = " + position[1]);
+        // get column index
+        int colIdx = position[0];
+        // get row index
+        int rowIdx = position[1];
+
+
+        if (colIdx != -1 && rowIdx != -1) {
+            // Here i got valid position for ROW and COLUMN indexes
+            // ...
+            playAgain = shoot(colIdx, rowIdx, tab);
+        }else{
+            System.out.println("entrée invalide, veuillez rentrer des coordonnées valides: ");
+        }
+        return playAgain;
+    }
+    
 
 
 
 
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
 
-        char tableau[][] = new char[10][10];
+        char playerBoard[][] = new char[10][10];
+        char cpuBoard[][] = new char[10][10];
 
 
         // Warm welcome to new player
         System.out.println("AHOY MATEY"); // write your code here
 
         // init
-        initTable(tableau);
+        initTable(playerBoard);
 
 
         while(true){
-            // Get input from user
-            System.out.println("Entrez des coordonnées : ");
-            String input = sc.next();
 
-            // Convert input
-            int[] position = convertPositionToIndex(input);
-            System.out.println("colonne = " + position[0]);
-            System.out.println("ligne = " + position[1]);
+            displayTable(playerBoard);
 
 
+            playerTurn(playerBoard);
 
-            // get column index
-            int colIdx = position[0];
-            // get row index
-            int rowIdx = position[1];
-
-
-            displayTable(tableau);
-            shoot(colIdx, rowIdx, tableau);
-
-
-
-                // Here i got valid position for ROW and COLUMN indexes
-                // ...
-
-
-            }
 
 
         }
 
 
     }
-
+}
