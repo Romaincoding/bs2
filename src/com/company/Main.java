@@ -1,5 +1,7 @@
 package com.company;
-//import Math.*;
+
+
+import java.util.Scanner;
 
 public class Main {
 
@@ -40,9 +42,9 @@ public class Main {
     static void storeShip(int size,boolean isHorizontal, int randomPointCol, int randomPointRow, char tab [][]){
         for (int s = 0; s < size; s++) {
             if (isHorizontal) {
-                tab[randomPointCol + s][randomPointRow] = 'S';
+                tab[randomPointCol + s][randomPointRow] = '#';
             } else {
-                tab[randomPointCol][randomPointRow + s] = 'S';
+                tab[randomPointCol][randomPointRow + s] = '#';
             }
         }
 
@@ -84,11 +86,11 @@ public class Main {
         // col = 1
         // row = 4
         for(int i=0;i<size;i++) {
-            if (isHorizontal == false && (tab[col][row + i] == 'S')) {
+            if (isHorizontal == false && (tab[col][row + i] == '#')) {
                 return false;
             }
 
-            if (isHorizontal == true && (tab [col+i][row] =='S')){
+            if (isHorizontal == true && (tab [col+i][row] =='#')){
                 return false;
             }
 
@@ -100,7 +102,7 @@ public class Main {
         String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
         //System.out.println(position);
 
-        char[] splitString = position.toCharArray() ;
+        char[] splitString = position.toUpperCase().toCharArray() ;
         String letter = Character.toString(splitString[0]);
         String number = Character.toString(splitString[1]);
        // System.out.println(letter);
@@ -133,25 +135,83 @@ public class Main {
         result[1] = index2;
         return result;
     }
+    //fonction play
+    static void shoot(int colIdx, int rowIdx, char tab[][]) {
+        if (isShip(colIdx, rowIdx, tab)==true){
+            System.out.println("BOOM!");
+            tab[colIdx][rowIdx] = 'X';
+
+        }else if(isAlreadyHit(colIdx, rowIdx, tab)==true){
+            System.out.println("AlREADY HIT");
+        }
+        else{
+            System.out.println("PLOUF");
+            tab[colIdx][rowIdx] = 'O';
+        }
+
+    }
+    static boolean isShip ( int col, int row, char tab [][]){
+        if(tab[col][row]== '#'){
+            return true;
+        }
+        return false;
+    }
+    static boolean isAlreadyHit ( int col, int row, char tab [][]) {
+        if (tab[col][row] == 'X') {
+            return true;
+        }
+        return false;
+    }
+
+
 
 
     public static void main(String[] args) {
 
+        Scanner sc = new Scanner(System.in);
+
         char tableau[][] = new char[10][10];
-// Warm welcome to new player
+
+
+        // Warm welcome to new player
         System.out.println("AHOY MATEY"); // write your code here
+
+        // init
         initTable(tableau);
 
-        displayTable(tableau);
-// function which convert entry
 
-        int[] position = convertPositionToIndex("C7");
-        System.out.println("colonne = " + position[0]);
-        System.out.println("ligne = "   + position[1]);
+        while(true){
+            // Get input from user
+            System.out.println("Entrez des coordonnées : ");
+            String input = sc.next();
 
-        // ask for an entry
+            // Convert input
+            int[] position = convertPositionToIndex(input);
+            System.out.println("colonne = " + position[0]);
+            System.out.println("ligne = " + position[1]);
 
+
+
+            // get column index
+            int colIdx = position[0];
+            // get row index
+            int rowIdx = position[1];
+
+
+            displayTable(tableau);
+            shoot(colIdx, rowIdx, tableau);
+
+
+
+                // Here i got valid position for ROW and COLUMN indexes
+                // ...
+
+
+            }
+
+
+        }
 
 
     }
-}
+
