@@ -191,13 +191,26 @@ public class Main {
         }
         return playAgain;
     }
-    
+
+
+    static boolean cpuTurn(char tab [][]){
+
+        int colIdx = (int) (Math.random() * 10);
+        // get row index
+        int rowIdx = (int) (Math.random() * 10);
+
+        return shoot(colIdx,rowIdx,tab);
+
+    }
+
+
 
 
 
 
     public static void main(String[] args) {
 
+        boolean isPlayerTurn = true;
 
         char playerBoard[][] = new char[10][10];
         char cpuBoard[][] = new char[10][10];
@@ -208,17 +221,25 @@ public class Main {
 
         // init
         initTable(playerBoard);
-
+        initTable(cpuBoard);
 
         while(true){
 
+            displayTable(cpuBoard);
             displayTable(playerBoard);
 
-
-            playerTurn(playerBoard);
-
-
-
+            if (isPlayerTurn){
+                playerTurn(cpuBoard);
+                if (playerTurn(cpuBoard)==false){
+                    isPlayerTurn=false;
+                }
+            }
+            else {
+                cpuTurn(playerBoard);
+                if (cpuTurn(playerBoard)==false){
+                    isPlayerTurn=true;
+                }
+            }
         }
 
 
