@@ -203,6 +203,21 @@ public class Main {
 
     }
 
+    static boolean allShipDestroyed(char tab [][]) {
+
+
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 10; col++) {
+                if (tab[col][row] == '#') {
+                    System.out.println("Joue encore!");
+                    return false;
+                }
+
+            }
+        }
+        System.out.println("Bravo Hugo tu as gagné!");
+        return true;
+    }
 
 
 
@@ -228,18 +243,23 @@ public class Main {
             displayTable(cpuBoard);
             displayTable(playerBoard);
 
+
+
             if (isPlayerTurn){
                 playerTurn(cpuBoard);
+                allShipDestroyed(cpuBoard);
                 if (playerTurn(cpuBoard)==false){
                     isPlayerTurn=false;
                 }
             }
             else {
                 cpuTurn(playerBoard);
+                allShipDestroyed(playerBoard);
                 if (cpuTurn(playerBoard)==false){
                     isPlayerTurn=true;
                 }
             }
+
         }
 
 
