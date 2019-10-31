@@ -32,14 +32,20 @@ public class Main {
      *
      * @param tab display a 2D table previously initialized
      */
-    static void displayTable(char tab[][]) {
-
+    static void displayTable(char tab[][], boolean isShipHidden) {
+        //isShipHidden = false;
         System.out.println("   A B C D E F G H I J");
         for (int row = 0; row < 10; row++) {
             String affichage = "";
             for (int col = 0; col < 10; col++) {
+                if (isShipHidden == true && tab[col][row] == '#') {
+                    affichage = affichage + '~'+ " ";
 
-                affichage = affichage + tab[col][row] + ' ';
+                }
+                else {
+                    affichage = affichage + tab[col][row] + ' ';
+                }
+
             }
             System.out.println(row + "  " + affichage);
         }
@@ -107,7 +113,7 @@ public class Main {
      * @param row the row's index
      * @param tab of type char [][]
      * @param isHorizontal is the orientation of the ship in table
-     * @return the boolean value (true or false)
+     * @return true if the ship is horizontal
      */
     static boolean isFree(int size, int col, int row, char tab[][], boolean isHorizontal) {
         // size = 2
@@ -175,7 +181,7 @@ public class Main {
      * @param colIdx is the number of the column
      * @param rowIdx is the number of the row
      * @param tab of type char [][]
-     * @return
+     * @return true if we hit an enemy ship
      */
     static boolean shoot(int colIdx, int rowIdx, char tab[][]) {
         boolean isShootOK = false;
@@ -224,20 +230,20 @@ public class Main {
     }
 
     /**
-     * Enter shoot information when is the player turn
+     * Enter shoot informations when the player turns
      * @param tab of type char [][]
-     * @return true if a sheep has been hit
+     * @return true if a ship has been hit
      */
     static boolean playerTurn(char tab[][]) {
         boolean playAgain = true;
         Scanner sc = new Scanner(System.in);
         // Get input from user
-        System.out.println("Entrez des coordonnées : ");
+        System.out.println("Please enter coordinates : ");
         String input = sc.next();
         // Convert input
         int[] position = convertPositionToIndex(input);
-        //System.out.println("colonne = " + position[0]);
-        //System.out.println("ligne = " + position[1]);
+        //System.out.println("column = " + position[0]);
+        //System.out.println("row = " + position[1]);
         // get column index
         int colIdx = position[0];
         // get row index
@@ -249,7 +255,7 @@ public class Main {
             // ...
             playAgain = shoot(colIdx, rowIdx, tab);
         } else {
-            System.out.println("entrée invalide, veuillez rentrer des coordonnées valides: ");
+            System.out.println("Wrong entry, please enter correct informations! ");
         }
         return playAgain;
     }
@@ -257,7 +263,7 @@ public class Main {
     /**
      *
      * @param tab of type char [][]
-     * @param list Arraylist that stocking previous move
+     * @param list Arraylist that is stocking previous move
      * @return if a ship has been hit
      */
     static boolean cpuTurn(char tab[][], ArrayList list) {
@@ -268,7 +274,7 @@ public class Main {
             // get row index
             rowIdx = (int) (Math.random() * 10);
         }while (isHistoryContain(colIdx, rowIdx, list));
-
+        // check if the ship has been hit
         boolean targetReached = shoot(colIdx, rowIdx, tab);
         updateHistory(colIdx, rowIdx, list );
         return targetReached;
@@ -351,8 +357,8 @@ public class Main {
 
             while (true) {
 
-                displayTable(cpuBoard);
-                displayTable(playerBoard);
+                displayTable(cpuBoard, true);
+                displayTable(playerBoard, false);
 
                 if (isPlayerTurn) {
 
