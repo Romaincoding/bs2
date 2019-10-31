@@ -29,12 +29,14 @@ public class Main {
 
     /**
      * Display a 2D table previously initialized
-     *
+     * Display or hide 5 ships on board
      * @param tab display a 2D table previously initialized
+     * @param isShipHidden if it's true: hide the ship on the board
      */
     static void displayTable(char tab[][], boolean isShipHidden) {
-        //isShipHidden = false;
+     // print the columns names
         System.out.println("   A B C D E F G H I J");
+        //fill the board with sea and ships
         for (int row = 0; row < 10; row++) {
             String affichage = "";
             for (int col = 0; col < 10; col++) {
@@ -73,10 +75,11 @@ public class Main {
 
     }
 
-    /**choose a random position in the table and
-    check if it's empty (no ship),
-    choose if the ship is horizontal and vertical
-    fill the table with ships until five ships are in the table
+    /**
+     * choose a random position in the table and
+     * check if it's empty (no ship),
+     * choose if the ship is horizontal and vertical
+     * fill the table with ships until five ships are in the table
      * @param size represents the size of a ship
      * @param tab  of type char [][]
      */
@@ -112,7 +115,7 @@ public class Main {
      * @param col the column's index
      * @param row the row's index
      * @param tab of type char [][]
-     * @param isHorizontal is the orientation of the ship in table
+     * @param isHorizontal is the orientation of the ship in the table
      * @return true if the ship is horizontal
      */
     static boolean isFree(int size, int col, int row, char tab[][], boolean isHorizontal) {
@@ -132,22 +135,19 @@ public class Main {
         return true;
     }
     /**
-     * Convert a string in an index position
+     * Convert a string into an index position
      * @param position is a string for example("B6")
      * @return two int , index column , index row
      */
     static int[] convertPositionToIndex(String position) {
         String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
         String[] numbers = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
-        //System.out.println(position);
-
+        // Set the string into capital letters and split it in two characters
         char[] splitString = position.toUpperCase().toCharArray();
         String letter = Character.toString(splitString[0]);
         String number = Character.toString(splitString[1]);
-        // System.out.println(letter);
-        //  System.out.println(number);
 
-
+        //Compare the characters with the letters tab and return index when they are equals
         int index = -1;
         int i = 0;
         for (String l : letters) {
@@ -157,7 +157,7 @@ public class Main {
             }
             i++;
         }
-
+        //Compare the characters with the letters tab and return index when they are equals
         int index2 = -1;
         i = 0;
         for (String n : numbers) {
@@ -168,7 +168,7 @@ public class Main {
             i++;
         }
 
-
+        //stock the characters in a variable and return it
         int[] result = new int[2];
         result[0] = index;
         result[1] = index2;
@@ -176,8 +176,9 @@ public class Main {
     }
 
     /**
-     * fonction that allows to shoot on the adversary board by choosing a position
-     * and displays a message if is destroyed or not
+     * fonction that allows to shoot on the opponent board by choosing a position
+     * displays a message if it's hit or not
+     * displays a message if we have already shot on the position
      * @param colIdx is the number of the column
      * @param rowIdx is the number of the row
      * @param tab of type char [][]
